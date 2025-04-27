@@ -255,3 +255,47 @@ function draw() {
 
 playerReset();
 update();
+
+//Mobile Actions
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+canvas.addEventListener('touchstart', (e) => {
+  const touch = e.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}, false);
+
+canvas.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  touchEndX = touch.clientX;
+  touchEndY = touch.clientY;
+}, false);
+
+canvas.addEventListener('touchend', () => {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 30) {
+      playerMove(1);
+    } else if (deltaX < -30) {
+      playerMove(-1);
+    }
+  } else {
+    if (deltaY > 30) {
+      playerDrop();
+    }
+  }
+
+  if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+    playerRotate();
+  }
+
+  touchStartX = 0;
+  touchStartY = 0;
+  touchEndX = 0;
+  touchEndY = 0;
+}, false);
