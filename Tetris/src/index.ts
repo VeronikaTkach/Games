@@ -223,6 +223,15 @@ function merge(arena: number[][], player: IPlayer) {
   });
 }
 
+//FastDrop for Mobile
+function startFastDrop() {
+  dropInterval = 1000 / 3;
+}
+
+function stopFastDrop() {
+  dropInterval = 1000;
+}
+
 //Dropdown timer
 let dropCounter = 0;
 let dropInterval = 1000; // 1 sec
@@ -290,7 +299,8 @@ canvas.addEventListener('touchend', (e) => {
       }
     } else {
       if (deltaY > 30) {
-        playerDrop();
+        startFastDrop();
+        setTimeout(stopFastDrop, 3000);
       }
     }
   }
